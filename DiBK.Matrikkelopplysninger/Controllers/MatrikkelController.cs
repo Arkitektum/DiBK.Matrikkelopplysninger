@@ -8,10 +8,17 @@ namespace DiBK.Matrikkelopplysninger.Controllers
     [ApiController]
     public class MatrikkelController : ControllerBase
     {
+        private readonly IConfiguration _config;
+
+        public MatrikkelController(IConfiguration config)
+        {
+            _config = config;
+        }
+
         [HttpGet("{knr:int},{gnr:int},{bnr:int}")]
         public MatrikkelregistreringType Get(int knr, int gnr, int bnr)
         {
-            return new MatrikkeldataProvider().GetMatrikkelOpplysninger(knr, gnr, bnr);
+            return new MatrikkeldataProvider(_config).GetMatrikkelOpplysninger(knr, gnr, bnr);
         }
     }
 }
