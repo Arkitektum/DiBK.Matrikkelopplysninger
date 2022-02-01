@@ -1,14 +1,15 @@
-﻿using no.kxml.skjema.dibk.matrikkelregistrering;
+using no.kxml.skjema.dibk.matrikkelregistrering;
 
 namespace DiBK.Matrikkelopplysninger.Services;
 
 public class MatrikkeldataProvider
 {
-    private readonly IConfiguration _config;
+    private MatrikkelContext _matrikkelContextObject;
 
     public MatrikkeldataProvider(IConfiguration config)
     {
-        _config = config;
+        var matrikkelClientProvider = new MatrikkelServiceClientProvider(config);
+        _matrikkelContextObject = matrikkelClientProvider.GetMatrikkelContextObject();
     }
 
     public MatrikkelregistreringType GetMatrikkelOpplysninger(int knr, int gnr, int bnr)
