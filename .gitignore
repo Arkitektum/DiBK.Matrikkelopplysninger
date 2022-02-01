@@ -349,3 +349,4 @@ healthchecksdb
 MigrationBackup/
 
 DiBK.Matrikkelopplysninger/appsettings.json
+DiBk.MatrikkelOpplysningerTests/appsettings.json

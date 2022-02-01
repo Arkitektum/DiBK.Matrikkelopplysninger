@@ -8,11 +8,12 @@ namespace DiBK.MatrikkelopplysningerTests.Services;
 
 public class MatrikkeldataProviderTests
 {
-    private readonly IConfiguration _config;
+    private readonly ConfigurationManager _config;
 
-    public MatrikkeldataProviderTests(IConfiguration config)
+    public MatrikkeldataProviderTests()
     {
-        _config = config;
+        _config = new ConfigurationManager();
+        _config.AddJsonFile("appsettings.json");
     }
 
     [Fact]
