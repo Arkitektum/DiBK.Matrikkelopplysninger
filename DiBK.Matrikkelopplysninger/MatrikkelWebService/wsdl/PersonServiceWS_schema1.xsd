@@ -57,19 +57,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findFysiskePersonIds">
-    <xs:sequence>
-      <xs:element name="personNumre" type="ns3:StringList"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findFysiskePersonIdsResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:StringTilFysiskPersonIdMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findPersonIdsForIdents">
     <xs:sequence>
       <xs:element name="personIdentList" type="ns1:PersonIdentList"/>
@@ -80,6 +67,19 @@
   <xs:complexType name="findPersonIdsForIdentsResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:PersonIdentTilPersonIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findFysiskePersonIds">
+    <xs:sequence>
+      <xs:element name="personNumre" type="ns3:StringList"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findFysiskePersonIdsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:StringTilFysiskPersonIdMap"/>
     </xs:sequence>
   </xs:complexType>
 

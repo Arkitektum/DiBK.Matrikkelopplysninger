@@ -101,19 +101,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findKonsesjonsforholdUtskrifterForMatrikkelenhet">
-    <xs:sequence>
-      <xs:element name="matrikkelenhetId" type="ns6:MatrikkelenhetId"/>
-      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findKonsesjonsforholdUtskrifterForMatrikkelenhetResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns5:KonsesjonsforholdUtskriftIdList"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="lovligeValgForEgenerklaringKonsesjonsfrihet">
     <xs:sequence>
       <xs:element name="kommuneId" type="ns2:KommuneId"/>
@@ -126,6 +113,19 @@
   <xs:complexType name="lovligeValgForEgenerklaringKonsesjonsfrihetResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:KonsesjonsfrihetEgenerklaringKodeIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findKonsesjonsforholdUtskrifterForMatrikkelenhet">
+    <xs:sequence>
+      <xs:element name="matrikkelenhetId" type="ns6:MatrikkelenhetId"/>
+      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findKonsesjonsforholdUtskrifterForMatrikkelenhetResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns5:KonsesjonsforholdUtskriftIdList"/>
     </xs:sequence>
   </xs:complexType>
 

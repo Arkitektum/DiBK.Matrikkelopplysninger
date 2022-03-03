@@ -210,19 +210,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="harLesFodselsnummerRettighet">
-    <xs:sequence>
-      <xs:element name="brukerId" type="ns4:BrukerId"/>
-      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="harLesFodselsnummerRettighetResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="harTaUtRapporterRettighet">
     <xs:sequence>
       <xs:element name="brukerId" type="ns4:BrukerId"/>
@@ -232,6 +219,19 @@
   </xs:complexType>
 
   <xs:complexType name="harTaUtRapporterRettighetResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="harLesFodselsnummerRettighet">
+    <xs:sequence>
+      <xs:element name="brukerId" type="ns4:BrukerId"/>
+      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="harLesFodselsnummerRettighetResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean"/>
     </xs:sequence>

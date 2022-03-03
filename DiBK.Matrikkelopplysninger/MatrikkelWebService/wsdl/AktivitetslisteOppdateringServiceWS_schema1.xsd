@@ -35,6 +35,17 @@
     <xs:sequence/>
   </xs:complexType>
 
+  <xs:complexType name="removeMeldinger">
+    <xs:sequence>
+      <xs:element name="meldinger" type="ns1:MeldingList"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeMeldingerResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
   <xs:complexType name="oppdaterMeldingStatus">
     <xs:sequence>
       <xs:element name="byggesakmeldingId" type="ns1:ByggesakmeldingId"/>
@@ -44,17 +55,6 @@
   </xs:complexType>
 
   <xs:complexType name="oppdaterMeldingStatusResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="removeMeldinger">
-    <xs:sequence>
-      <xs:element name="meldinger" type="ns1:MeldingList"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="removeMeldingerResponse">
     <xs:sequence/>
   </xs:complexType>
 

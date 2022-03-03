@@ -132,19 +132,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findOffisiellAdresseForBruksenhet">
-    <xs:sequence>
-      <xs:element name="bruksenhetId" type="ns4:BruksenhetId"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findOffisiellAdresseForBruksenhetResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findBruksenhetsnummerForBruksenheter">
     <xs:sequence>
       <xs:element name="bruksenhetIds" type="ns4:BruksenhetIdList"/>
@@ -155,6 +142,19 @@
   <xs:complexType name="findBruksenhetsnummerForBruksenheterResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns4:BruksenhetIdTilStringMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findOffisiellAdresseForBruksenhet">
+    <xs:sequence>
+      <xs:element name="bruksenhetId" type="ns4:BruksenhetId"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findOffisiellAdresseForBruksenhetResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 

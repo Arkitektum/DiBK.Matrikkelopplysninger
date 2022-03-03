@@ -850,17 +850,6 @@
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="vedlikeholdGrenseISjo">
-    <xs:sequence>
-      <xs:element name="transfer" type="ns1:VedlikeholdGrenseISjoUnitOfWorkTransfer"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="vedlikeholdGrenseISjoResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="lockForForretningForTeiger">
     <xs:sequence>
       <xs:element name="teigIds" type="ns1:TeigIdList"/>
@@ -873,6 +862,17 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:LockedObjectsForForretningTransfer"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vedlikeholdGrenseISjo">
+    <xs:sequence>
+      <xs:element name="transfer" type="ns1:VedlikeholdGrenseISjoUnitOfWorkTransfer"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vedlikeholdGrenseISjoResponse">
+    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="lockForMatrikkelenhetTilknyttingForTeiger">
@@ -911,6 +911,19 @@
     <xs:sequence/>
   </xs:complexType>
 
+  <xs:complexType name="lockForForretning">
+    <xs:sequence>
+      <xs:element name="matrikkelenhetId" type="ns1:MatrikkelenhetId"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lockForForretningResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:LockedObjectsForForretningTransfer"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="arealoverforing">
     <xs:sequence>
       <xs:element name="transfer" type="ns1:ArealoverforingUnitOfWorkTransfer"/>
@@ -943,19 +956,6 @@
 
   <xs:complexType name="omnummererMatrikkelenhetKommuneendringResponse">
     <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="lockForForretning">
-    <xs:sequence>
-      <xs:element name="matrikkelenhetId" type="ns1:MatrikkelenhetId"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="lockForForretningResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:LockedObjectsForForretningTransfer"/>
-    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="lockForForretningMedFestegrunner">

@@ -42,17 +42,9 @@
 
   <xs:element name="saveAllResponse" type="tns:saveAllResponse"/>
 
-  <xs:element name="saveAllWithAdressemerkeBestilling" type="tns:saveAllWithAdressemerkeBestilling"/>
-
-  <xs:element name="saveAllWithAdressemerkeBestillingResponse" type="tns:saveAllWithAdressemerkeBestillingResponse"/>
-
   <xs:element name="saveSnapshotTransfer" type="tns:saveSnapshotTransfer"/>
 
   <xs:element name="saveSnapshotTransferResponse" type="tns:saveSnapshotTransferResponse"/>
-
-  <xs:element name="saveSnapshotTransferWithAdressemerkeBestilling" type="tns:saveSnapshotTransferWithAdressemerkeBestilling"/>
-
-  <xs:element name="saveSnapshotTransferWithAdressemerkeBestillingResponse" type="tns:saveSnapshotTransferWithAdressemerkeBestillingResponse"/>
 
   <xs:complexType name="saveAll">
     <xs:sequence>
@@ -88,17 +80,6 @@
     <xs:sequence>
       <xs:element name="return" type="xs:boolean"/>
     </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="saveAllWithAdressemerkeBestilling">
-    <xs:sequence>
-      <xs:element name="snapshotTransfers" type="ns1:MockupSnapshotMap"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="saveAllWithAdressemerkeBestillingResponse">
-    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="finnMatrikkelnummerForId">
@@ -151,18 +132,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:TestNumber"/>
     </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="saveSnapshotTransferWithAdressemerkeBestilling">
-    <xs:sequence>
-      <xs:element name="snapshotVersion" type="ns3:Timestamp"/>
-      <xs:element name="mockupTransfer" type="ns1:MockupTransfer"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="saveSnapshotTransferWithAdressemerkeBestillingResponse">
-    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="saveSnapshotTransfer">

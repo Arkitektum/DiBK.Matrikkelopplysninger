@@ -196,6 +196,10 @@
 
   <xs:element name="createPantebokHoveddokumentutskrifterResponse" type="tns:createPantebokHoveddokumentutskrifterResponse"/>
 
+  <xs:element name="createPartsliste" type="tns:createPartsliste"/>
+
+  <xs:element name="createPartslisteResponse" type="tns:createPartslisteResponse"/>
+
   <xs:element name="createSamletRapportForMatrikkelenhet" type="tns:createSamletRapportForMatrikkelenhet"/>
 
   <xs:element name="createSamletRapportForMatrikkelenhetResponse" type="tns:createSamletRapportForMatrikkelenhetResponse"/>
@@ -327,6 +331,22 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="createPartsliste">
+    <xs:sequence>
+      <xs:element name="matrikkelenhetId" type="ns9:MatrikkelenhetId"/>
+      <xs:element name="tilknytninger" type="ns9:TilknytningDTOList"/>
+      <xs:element name="exportTypeId" type="ns4:ExportTypeId"/>
+      <xs:element name="offline" type="xs:boolean"/>
+      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createPartslisteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="createVeghistorikkRapport">
     <xs:sequence>
       <xs:element name="sokemodell" type="ns10:VegHistorikksokModel"/>
@@ -343,6 +363,20 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="createPantebokHoveddokumentutskrifter">
+    <xs:sequence>
+      <xs:element name="pantebokDokumentIdenter" type="ns11:PantebokDokumentIdentList"/>
+      <xs:element name="offline" type="xs:boolean"/>
+      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createPantebokHoveddokumentutskrifterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="createSamletRapportForMatrikkelenhet">
     <xs:sequence>
       <xs:element name="matrikkelenhetId" type="ns9:MatrikkelenhetId"/>
@@ -353,20 +387,6 @@
   </xs:complexType>
 
   <xs:complexType name="createSamletRapportForMatrikkelenhetResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="createPantebokHoveddokumentutskrifter">
-    <xs:sequence>
-      <xs:element name="pantebokDokumentIdenter" type="ns11:PantebokDokumentIdentList"/>
-      <xs:element name="offline" type="xs:boolean"/>
-      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="createPantebokHoveddokumentutskrifterResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
     </xs:sequence>
@@ -402,22 +422,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="createMatrikkelbrevHistorisk">
-    <xs:sequence>
-      <xs:element name="matrikkelenhetId" type="ns9:MatrikkelenhetId"/>
-      <xs:element name="tidspunkt" type="ns2:Timestamp"/>
-      <xs:element name="exportTypeId" type="ns4:ExportTypeId"/>
-      <xs:element name="offline" type="xs:boolean"/>
-      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="createMatrikkelbrevHistoriskResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="createBygningMedBygningssendringRapport">
     <xs:sequence>
       <xs:element name="byggsokModel" type="ns3:AbstractByggsokModel"/>
@@ -435,6 +439,22 @@
   </xs:complexType>
 
   <xs:complexType name="createBygningMedBygningssendringRapportResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createMatrikkelbrevHistorisk">
+    <xs:sequence>
+      <xs:element name="matrikkelenhetId" type="ns9:MatrikkelenhetId"/>
+      <xs:element name="tidspunkt" type="ns2:Timestamp"/>
+      <xs:element name="exportTypeId" type="ns4:ExportTypeId"/>
+      <xs:element name="offline" type="xs:boolean"/>
+      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createMatrikkelbrevHistoriskResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
     </xs:sequence>
@@ -797,21 +817,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="createSamletRapportRestanserOppmaling">
-    <xs:sequence>
-      <xs:element name="kommuneId" type="ns1:KommuneId"/>
-      <xs:element name="exportTypeId" type="ns4:ExportTypeId"/>
-      <xs:element name="offline" type="xs:boolean"/>
-      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="createSamletRapportRestanserOppmalingResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="createMatrikkelenhetKontrollRapport">
     <xs:sequence>
       <xs:element name="kommuneId" type="ns1:KommuneId"/>
@@ -824,6 +829,21 @@
   </xs:complexType>
 
   <xs:complexType name="createMatrikkelenhetKontrollRapportResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createSamletRapportRestanserOppmaling">
+    <xs:sequence>
+      <xs:element name="kommuneId" type="ns1:KommuneId"/>
+      <xs:element name="exportTypeId" type="ns4:ExportTypeId"/>
+      <xs:element name="offline" type="xs:boolean"/>
+      <xs:element name="matrikkelContext" type="ns2:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createSamletRapportRestanserOppmalingResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns6:MatrikkelRapport"/>
     </xs:sequence>

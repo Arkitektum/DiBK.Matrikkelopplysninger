@@ -205,6 +205,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="findAdresserForVeger">
+    <xs:sequence>
+      <xs:element name="vegIds" type="ns5:VegIdList"/>
+      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAdresserForVegerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns5:VegIdTilAdresseIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="finnesAdresseMedKretsIKommune">
     <xs:sequence>
       <xs:element name="kretsId" type="ns5:KretsId"/>
@@ -216,19 +229,6 @@
   <xs:complexType name="finnesAdresseMedKretsIKommuneResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findAdresserForVeger">
-    <xs:sequence>
-      <xs:element name="vegIds" type="ns5:VegIdList"/>
-      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findAdresserForVegerResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns5:VegIdTilAdresseIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -340,19 +340,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findKommunaleKretstyper">
-    <xs:sequence>
-      <xs:element name="kommuneId" type="ns1:KommuneId"/>
-      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findKommunaleKretstyperResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns2:KommunalKretstypeKodeIdList"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findAdresseIdForIdent">
     <xs:sequence>
       <xs:element name="adresseIdent" type="ns5:AdresseIdent"/>
@@ -363,6 +350,19 @@
   <xs:complexType name="findAdresseIdForIdentResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns5:AdresseId"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findKommunaleKretstyper">
+    <xs:sequence>
+      <xs:element name="kommuneId" type="ns1:KommuneId"/>
+      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findKommunaleKretstyperResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:KommunalKretstypeKodeIdList"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -392,6 +392,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="findNavarendeAdresseIdenterForAdresseIdent">
+    <xs:sequence>
+      <xs:element name="adresseIdent" type="ns5:AdresseIdent"/>
+      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findNavarendeAdresseIdenterForAdresseIdentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns5:AdresseIdentList"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="findObjekterForAdresse">
     <xs:sequence>
       <xs:element name="adresseId" type="ns5:AdresseId"/>
@@ -415,19 +428,6 @@
   <xs:complexType name="findAdresserForSelectionPolygonResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns5:AdresseIdList"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findNavarendeAdresseIdenterForAdresseIdent">
-    <xs:sequence>
-      <xs:element name="adresseIdent" type="ns5:AdresseIdent"/>
-      <xs:element name="matrikkelContext" type="ns4:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findNavarendeAdresseIdenterForAdresseIdentResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns5:AdresseIdentList"/>
     </xs:sequence>
   </xs:complexType>
 

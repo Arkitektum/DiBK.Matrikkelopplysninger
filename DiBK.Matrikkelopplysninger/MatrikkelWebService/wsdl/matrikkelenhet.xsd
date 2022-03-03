@@ -18,7 +18,6 @@
     xmlns:grunnforurensingns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing"
     xmlns:kulturminnens="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne"
     xmlns:utilns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/util"
-    xmlns:pantebok="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/pantebok"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     elementFormDefault="qualified">
 
@@ -1587,7 +1586,8 @@
                     <xs:element name="bygningIds" type="bygningns:ByggIdList" minOccurs="0"/>
                     <xs:element name="klageIds" type="KlageIdList" minOccurs="0"/>
                     <xs:element name="avtaleGrensePunktfesteIds" type="AvtaleGrensePunktfesteIdList" minOccurs="0"/>
-                    <xs:element name="avtaleStedbundenRettighetIds" type="AvtaleStedbundenRettighetIdList" minOccurs="0"/>
+                    <xs:element name="avtaleStedbundenRettighetIds" type="AvtaleStedbundenRettighetIdList"
+                                minOccurs="0"/>
                     <xs:element name="jordskifteKrevdIds" type="JordskifteKrevdIdList"
                                 minOccurs="0"/>
                     <xs:element name="grunnervervIds" type="GrunnervervIdList" minOccurs="0"/>
@@ -2130,7 +2130,8 @@
         <xs:complexContent>
             <xs:extension base="basistyperns:UnitOfWorkTransfer">
                 <xs:sequence>
-                    <xs:element name="avtaleStedbundenRettighetId" type="matrikkelenhetns:AvtaleStedbundenRettighetId" minOccurs="0"/>
+                    <xs:element name="avtaleStedbundenRettighetId" type="matrikkelenhetns:AvtaleStedbundenRettighetId"
+                                minOccurs="0"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -2241,8 +2242,10 @@
             <xs:element name="grunnerverv" type="MatrikkelenhetIdTilGrunnervervIdsMap" minOccurs="0"/>
             <xs:element name="jordskifteKrevd" type="MatrikkelenhetIdTilJordskifteKrevdIdsMap" minOccurs="0"/>
             <xs:element name="klager" type="MatrikkelenhetIdTilKlageIdsMap" minOccurs="0"/>
-            <xs:element name="avtalerGrensePunktfeste" type="MatrikkelenhetIdTilAvtaleGrensePunktfesteIdsMap" minOccurs="0"/>
-            <xs:element name="avtalerStedbundenRettighet" type="MatrikkelenhetIdTilAvtaleStedbundenRettighetIdsMap" minOccurs="0"/>
+            <xs:element name="avtalerGrensePunktfeste" type="MatrikkelenhetIdTilAvtaleGrensePunktfesteIdsMap"
+                        minOccurs="0"/>
+            <xs:element name="avtalerStedbundenRettighet" type="MatrikkelenhetIdTilAvtaleStedbundenRettighetIdsMap"
+                        minOccurs="0"/>
             <xs:element name="samlaFastEiendommer" type="MatrikkelenhetIdTilSamlaFastEiendomIdsMap" minOccurs="0"/>
             <xs:element name="grunnforurensinger" type="MatrikkelenhetIdTilGrunnforurensingIdsMap" minOccurs="0"/>
             <xs:element name="kulturminner" type="MatrikkelenhetIdTilKulturminneIdsMap" minOccurs="0"/>
@@ -2268,8 +2271,10 @@
             <xs:element name="grunnerverv" type="MatrikkelenhetIdTilGrunnervervIdsMap" minOccurs="0"/>
             <xs:element name="jordskifteKrevd" type="MatrikkelenhetIdTilJordskifteKrevdIdsMap" minOccurs="0"/>
             <xs:element name="klager" type="MatrikkelenhetIdTilKlageIdsMap" minOccurs="0"/>
-            <xs:element name="avtalerGrensePunktfeste" type="MatrikkelenhetIdTilAvtaleGrensePunktfesteIdsMap" minOccurs="0"/>
-            <xs:element name="avtalerStedbundenRettighet" type="MatrikkelenhetIdTilAvtaleStedbundenRettighetIdsMap" minOccurs="0"/>
+            <xs:element name="avtalerGrensePunktfeste" type="MatrikkelenhetIdTilAvtaleGrensePunktfesteIdsMap"
+                        minOccurs="0"/>
+            <xs:element name="avtalerStedbundenRettighet" type="MatrikkelenhetIdTilAvtaleStedbundenRettighetIdsMap"
+                        minOccurs="0"/>
             <xs:element name="samlaFastEiendommer" type="MatrikkelenhetIdTilSamlaFastEiendomIdsMap" minOccurs="0"/>
             <xs:element name="bubbleObjects" type="basistyperns:MatrikkelBubbleObjectList" minOccurs="0"/>
         </xs:sequence>
@@ -2460,6 +2465,29 @@
             <xs:element name="rettsstiftelsesnr" type="xs:int" minOccurs="0"/>
             <xs:element name="kodeverdi" type="xs:string" minOccurs="0"/>
             <xs:element name="navn" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HeftereFraGrunnbok">
+        <xs:sequence>
+            <xs:element name="personIds" type="personns:PersonIdList" minOccurs="0"/>
+            <xs:element name="matrikkelenhetIds" type="matrikkelenhetns:MatrikkelenhetIdList" minOccurs="0"/>
+            <xs:element name="dataMissing" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TilknytningDTO">
+        <xs:sequence>
+            <xs:element name="matrikkelenhetId" type="matrikkelenhetns:MatrikkelenhetId" minOccurs="0"/>
+            <xs:element name="personId" type="personns:PersonId" minOccurs="0"/>
+            <xs:element name="eierforholdId" type="xs:long" minOccurs="0"/>
+            <xs:element name="partsstilling" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TilknytningDTOList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="TilknytningDTO"/>
         </xs:sequence>
     </xs:complexType>
 

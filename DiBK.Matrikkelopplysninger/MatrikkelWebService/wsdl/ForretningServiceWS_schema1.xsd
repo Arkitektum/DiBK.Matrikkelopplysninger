@@ -155,19 +155,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findSammenslaing">
-    <xs:sequence>
-      <xs:element name="tinglystDokumentIdent" type="ns4:TinglystDokumentIdent"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findSammenslaingResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns4:SammenslaingForretningId"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findJordskifteForretningForJordskifteKrevd">
     <xs:sequence>
       <xs:element name="jordskifteKrevdId" type="ns1:JordskifteKrevdId"/>
@@ -178,6 +165,19 @@
   <xs:complexType name="findJordskifteForretningForJordskifteKrevdResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns4:JordskifteForretningId"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSammenslaing">
+    <xs:sequence>
+      <xs:element name="tinglystDokumentIdent" type="ns4:TinglystDokumentIdent"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSammenslaingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns4:SammenslaingForretningId"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -207,19 +207,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findForretningerSomSkalTinglysesForMatrikkelenhet">
-    <xs:sequence>
-      <xs:element name="matrikkelenhetId" type="ns1:MatrikkelenhetId"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findForretningerSomSkalTinglysesForMatrikkelenhetResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns4:MatrikkelenhetForretningIdList"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findForretningerForTeig">
     <xs:sequence>
       <xs:element name="teigId" type="ns1:TeigId"/>
@@ -230,6 +217,19 @@
   <xs:complexType name="findForretningerForTeigResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns4:MatrikkelenhetGeometriForretningIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findForretningerSomSkalTinglysesForMatrikkelenhet">
+    <xs:sequence>
+      <xs:element name="matrikkelenhetId" type="ns1:MatrikkelenhetId"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findForretningerSomSkalTinglysesForMatrikkelenhetResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns4:MatrikkelenhetForretningIdList"/>
     </xs:sequence>
   </xs:complexType>
 

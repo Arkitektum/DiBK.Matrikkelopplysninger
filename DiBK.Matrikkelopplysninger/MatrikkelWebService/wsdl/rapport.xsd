@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-        version="1.0"
-        targetNamespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport"
-        xmlns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport"
-        xmlns:rapportkoderns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder"
-        xmlns:basistyperns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain"
-        xmlns:geometrins="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri"
-        xmlns:jobbns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb"
-        xmlns:kommunens="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune"
-        xmlns:matrikkelenhetns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet"
-        xmlns:utilns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/util"
-        xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    version="1.0"
+    targetNamespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport"
+    xmlns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport"
+    xmlns:rapportkoderns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder"
+    xmlns:basistyperns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain"
+    xmlns:geometrins="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri"
+    xmlns:jobbns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb"
+    xmlns:kommunens="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune"
+    xmlns:utilns="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/util"
+    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
     <xs:import schemaLocation="rapportKoder.xsd"
                namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder"/>
@@ -23,13 +22,11 @@
                namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb"/>
     <xs:import schemaLocation="kommune.xsd"
                namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune"/>
-    <xs:import schemaLocation="matrikkelenhet.xsd"
-               namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet"/>
     <xs:import schemaLocation="util.xsd"
                namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/util"/>
 
-
-    <xs:complexType name="MatrikkelRapport" abstract="true"> <!--Forskjellige datatyper i domene og wsapi som maa mappes-->
+    <xs:complexType name="MatrikkelRapport"
+                    abstract="true"> <!--Forskjellige datatyper i domene og wsapi som maa mappes-->
         <xs:sequence>
             <xs:element name="url" type="xs:anyURI" minOccurs="0"/> <!--URL-->
             <xs:element name="size" type="xs:long" minOccurs="0"/>
@@ -57,7 +54,7 @@
                 <xs:sequence>
                     <xs:element name="pages" type="xs:int" minOccurs="0"/>
                     <xs:element name="view" type="xs:base64Binary" minOccurs="0"
-                             xmime:expectedContentTypes="*/*"/>
+                                xmime:expectedContentTypes="*/*"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -128,7 +125,7 @@
         <xs:sequence>
             <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
                 <xs:simpleType>
-                    <xs:restriction base="Byggklasse" />
+                    <xs:restriction base="Byggklasse"/>
                 </xs:simpleType>
             </xs:element>
         </xs:sequence>

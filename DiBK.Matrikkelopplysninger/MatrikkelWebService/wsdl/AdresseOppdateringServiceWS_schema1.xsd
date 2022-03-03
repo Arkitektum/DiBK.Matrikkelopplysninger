@@ -123,17 +123,6 @@
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="removeAdresse">
-    <xs:sequence>
-      <xs:element name="adresseId" type="ns1:AdresseId"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="removeAdresseResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="endreMatrikkeladresseTilVegadresse">
     <xs:sequence>
       <xs:element name="vegadresse" type="ns1:Vegadresse"/>
@@ -145,14 +134,14 @@
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="updateMatrikkeladresse">
+  <xs:complexType name="removeAdresse">
     <xs:sequence>
-      <xs:element name="matrikkeladresse" type="ns1:Matrikkeladresse"/>
+      <xs:element name="adresseId" type="ns1:AdresseId"/>
       <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="updateMatrikkeladresseResponse">
+  <xs:complexType name="removeAdresseResponse">
     <xs:sequence/>
   </xs:complexType>
 
@@ -164,6 +153,17 @@
   </xs:complexType>
 
   <xs:complexType name="removeKretsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateMatrikkeladresse">
+    <xs:sequence>
+      <xs:element name="matrikkeladresse" type="ns1:Matrikkeladresse"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateMatrikkeladresseResponse">
     <xs:sequence/>
   </xs:complexType>
 
@@ -340,17 +340,6 @@
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="insertMatrikkeladresse">
-    <xs:sequence>
-      <xs:element name="nyMatrikkeladresse" type="ns1:Matrikkeladresse"/>
-      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="insertMatrikkeladresseResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="removePostnummeromrade">
     <xs:sequence>
       <xs:element name="postnummeromrade" type="ns1:Postnummeromrade"/>
@@ -359,6 +348,17 @@
   </xs:complexType>
 
   <xs:complexType name="removePostnummeromradeResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="insertMatrikkeladresse">
+    <xs:sequence>
+      <xs:element name="nyMatrikkeladresse" type="ns1:Matrikkeladresse"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="insertMatrikkeladresseResponse">
     <xs:sequence/>
   </xs:complexType>
 

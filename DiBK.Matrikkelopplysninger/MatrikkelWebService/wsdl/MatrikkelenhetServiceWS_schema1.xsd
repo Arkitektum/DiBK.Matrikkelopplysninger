@@ -106,6 +106,10 @@
 
   <xs:element name="findGrunnervervForReferanseResponse" type="tns:findGrunnervervForReferanseResponse"/>
 
+  <xs:element name="findIGrunnbokHeftereFor" type="tns:findIGrunnbokHeftereFor"/>
+
+  <xs:element name="findIGrunnbokHeftereForResponse" type="tns:findIGrunnbokHeftereForResponse"/>
+
   <xs:element name="findIGrunnbokRettsstiftelserOgMatrikkelenheterForDokNr" type="tns:findIGrunnbokRettsstiftelserOgMatrikkelenheterForDokNr"/>
 
   <xs:element name="findIGrunnbokRettsstiftelserOgMatrikkelenheterForDokNrResponse" type="tns:findIGrunnbokRettsstiftelserOgMatrikkelenheterForDokNrResponse"/>
@@ -397,6 +401,19 @@
   <xs:complexType name="findNaboerResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:MatrikkelenhetIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIGrunnbokHeftereFor">
+    <xs:sequence>
+      <xs:element name="ident" type="ns1:MatrikkelenhetIdent"/>
+      <xs:element name="matrikkelContext" type="ns3:MatrikkelContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIGrunnbokHeftereForResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:HeftereFraGrunnbok"/>
     </xs:sequence>
   </xs:complexType>
 
