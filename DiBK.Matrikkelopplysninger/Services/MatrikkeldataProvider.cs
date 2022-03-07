@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -7,6 +7,7 @@ using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.matrikkelenhet;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.adresse;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.bygning;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.store;
+using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.kodeliste;
 
 namespace DiBK.Matrikkelopplysninger.Services;
 
@@ -17,6 +18,7 @@ public class MatrikkeldataProvider
     private BygningServiceClient _bygningServiceClient;
     private AdresseServiceClient _adresseServiceClient;
     private MatrikkelenhetServiceClient _matrikkelenhetServiceClient;
+    private KodelisteServiceClient _kodelisteServiceClient;
 
 
     public MatrikkeldataProvider(IConfiguration config)
@@ -28,6 +30,7 @@ public class MatrikkeldataProvider
         _adresseServiceClient = matrikkelClientProvider.GetAdresseServiceClient();
         _bygningServiceClient = matrikkelClientProvider.GetBygningServiceClient();
         _storeServiceClient = matrikkelClientProvider.GetStoreServiceClient();
+        _kodelisteServiceClient = matrikkelClientProvider.GetKodelisteServiceClient();
     }
 
 
