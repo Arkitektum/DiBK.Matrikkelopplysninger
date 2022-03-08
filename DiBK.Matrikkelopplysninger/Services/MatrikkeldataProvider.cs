@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -8,6 +8,7 @@ using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.adresse;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.bygning;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.store;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.kodeliste;
+
 
 namespace DiBK.Matrikkelopplysninger.Services;
 
@@ -93,6 +94,7 @@ public class MatrikkeldataProvider
             kommunenummer = knr.ToString(),
             gardsnummer = gnr.ToString(),
             bruksnummer = bnr.ToString()
+
         };
 
         MatrikkelenhetId[] matrikkelenhetIds = _matrikkelenhetServiceClient.findMatrikkelenheter(matrikkelenhetsokModel, _matrikkelContextObject);
@@ -152,25 +154,24 @@ public class MatrikkeldataProvider
                     var avlopskode = (AvlopsKode) _storeServiceClient.getObject(((Bygning) bygg).avlopsKodeId, _matrikkelContextObject);
                     var kjokkenkode = (KjokkentilgangKode) _storeServiceClient.getObject(bruksenhetObject.kjokkentilgangId, _matrikkelContextObject);
                     var bruksenhetType = (BruksenhetstypeKode) _storeServiceClient.getObject(bruksenhetObject.bruksenhetstypeKodeId, _matrikkelContextObject);
-                    //var varmefordeling = _storeServiceClient.getObjects(((Bygning)bygg).oppvarmingsKodeIds, _matrikkelContextObject);
-                    //var varme = (OppvarmingsKode)_storeServiceClient.getObject(varmefordeling[0].id, _matrikkelContextObject);
-                    //var energiforsyning = _storeServiceClient.getObjects(((Bygning) bygg).energikildeKodeIds, _matrikkelContextObject);
-                    //var energi = (EnergikildeKode) _storeServiceClient.getObject(energiforsyning[0].id, _matrikkelContextObject);
-                    var vannforsyning = (VannforsyningsKode) _storeServiceClient.getObject(((Bygning) bygg).vannforsyningsKodeId, _matrikkelContextObject);
-                   
+                    var vannforsyning = (VannforsyningsKode) _storeServiceClient.getObject(((Bygning) bygg).vannforsyningsKodeId, _matrikkelContextObject);              
+
+                    //var kodelister = _kodelisteServiceClient.getKodelisterEnkel(_matrikkelContextObject);
+                    //var noko = kodelister.bubbleObjects;               
+                    //var n = bygningstypeKode.id;
 
                     bygning.bygningsnummer = bygg.bygningsnummer.ToString();
 
                     bygning.naeringsgruppe = new KodeType
                     {
                         kodeverdi = naeringsgruppe.kodeverdi,
-                        kodebeskrivelse = naeringsgruppe.navn.ToString()
+                        kodebeskrivelse = naeringsgruppe.navn[0].value.ToString()
                     };
 
                     bygning.bygningstype = new KodeType
                     {
                         kodeverdi = bygningstypeKode.kodeverdi,
-                        kodebeskrivelse = bygningstypeKode.navn.ToString()
+                        kodebeskrivelse = bygningstypeKode.navn[0].value.ToString()
                     };
 
                     bygning.bebygdAreal = bygg.bebygdAreal;
@@ -192,7 +193,7 @@ public class MatrikkeldataProvider
                             etasjeplan = new KodeType
                             {
                                 kodeverdi = etasjeplanKode.kodeverdi,
-                                kodebeskrivelse = etasjeplanKode.navn.ToString()
+                                kodebeskrivelse = etasjeplanKode.navn[0].value.ToString()
                             },
                             bruttoarealTilBolig = etasje.bruttoarealTilBolig,
                             bruttoarealTilBoligSpecified = etasje.bruttoarealTilBoligSpecified,
@@ -209,7 +210,7 @@ public class MatrikkeldataProvider
                     bygning.avlop = new KodeType
                     {
                         kodeverdi = avlopskode.kodeverdi,
-                        kodebeskrivelse = avlopskode.navn.ToString()
+                        kodebeskrivelse = avlopskode.navn[0].value.ToString()
                     };
 
 
@@ -223,7 +224,7 @@ public class MatrikkeldataProvider
                                 etasjeplan = new KodeType
                                 {
                                     kodeverdi = etasjeplanKode.kodeverdi,
-                                    kodebeskrivelse = etasjeplanKode.navn.ToString()
+                                    kodebeskrivelse = etasjeplanKode.navn[0].value.ToString()
                                 },
                                 etasjenummer = bruksenhetObject.etasjenummer.ToString(),
                                 loepenummer = bruksenhetObject.lopenummer.ToString()
@@ -233,7 +234,7 @@ public class MatrikkeldataProvider
                             kjoekkentilgang = new KodeType
                             {
                                 kodeverdi = kjokkenkode.kodeverdi,
-                                kodebeskrivelse = kjokkenkode.navn.ToString()
+                                kodebeskrivelse = kjokkenkode.navn[0].value.ToString()
                             },
                             antallRom = bruksenhetObject.antallRom.ToString(),
                             antallBad = bruksenhetObject.antallBad.ToString(),
@@ -241,7 +242,7 @@ public class MatrikkeldataProvider
                             bruksenhetstype = new KodeType
                             {
                                 kodeverdi = bruksenhetType.kodeverdi,
-                                kodebeskrivelse = bruksenhetType.navn.ToString()
+                                kodebeskrivelse = bruksenhetType.navn[0].value.ToString()
                             },
                             adresse = new BoligadresseType                  //TODO: kan dette være det samme som i AdresseType[]?
                             {
@@ -256,24 +257,33 @@ public class MatrikkeldataProvider
 
                     bygning.bruksenheter = bruksenheter.ToArray();
 
+                    var oppvarmingsKodeIds = _storeServiceClient.getObjects(((Bygning)bygg).oppvarmingsKodeIds, _matrikkelContextObject);
+                    var varmefordelinger = new List<KodeType>();
+                    foreach (var varmeObjekt in bygg.oppvarmingsKodeIds)
+                    {
+                        var oppvarmingsKodeId = (OppvarmingsKode)_storeServiceClient.getObject(oppvarmingsKodeIds[0].id, _matrikkelContextObject);
+                        varmefordelinger.Add(new KodeType
+                        {
+                            kodeverdi = oppvarmingsKodeId.kodeverdi,
+                            kodebeskrivelse = oppvarmingsKodeId.navn[0].value.ToString()
+                        });
+                    }
+                    var energikildeKodeIds = _storeServiceClient.getObjects(((Bygning) bygg).energikildeKodeIds, _matrikkelContextObject);              
+                    var energiforsyninger = new List<KodeType>();
+                    foreach (var energiObjekt in bygg.energikildeKodeIds)
+                    {
+                        var energikildeKodeId = (EnergikildeKode)_storeServiceClient.getObject(energikildeKodeIds[0].id, _matrikkelContextObject);
+                        energiforsyninger.Add(new KodeType
+                        {
+                            kodeverdi = energikildeKodeId.kodeverdi,
+                            kodebeskrivelse = energikildeKodeId.navn[0].value.ToString()
+                        });
+                    }
+
                     bygning.energiforsyning = new EnergiforsyningType
                     {
-                        varmefordeling = new KodeType[]
-                        {
-                            new KodeType
-                            {
-                                //kodeverdi = varme.kodeverdi,
-                                //kodebeskrivelse = varme.navn.ToString()
-                            },
-                        },
-                        energiforsyning = new KodeType[]
-                        {
-                            new KodeType
-                            {
-                                //kodeverdi = energi.kodeverdi,
-                                //kodebeskrivelse = energi.navn.ToString()
-                            },
-                        },
+                        varmefordeling = varmefordelinger.ToArray(),
+                        energiforsyning = energiforsyninger.ToArray()
                         //relevant = //TODO: ser ut som denne allerede ligger i kodelisten
                         //relevantSpecified = 
                     };
@@ -281,7 +291,7 @@ public class MatrikkeldataProvider
                     bygning.vannforsyning = new KodeType
                     {
                         kodeverdi = vannforsyning.kodeverdi,
-                        kodebeskrivelse = vannforsyning.navn.ToString()
+                        kodebeskrivelse = vannforsyning.navn[0].value.ToString()
                     };
 
                     bygning.harHeis = bygg.harHeis;
