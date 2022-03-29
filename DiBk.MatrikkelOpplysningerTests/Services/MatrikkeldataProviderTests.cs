@@ -19,7 +19,7 @@ public class MatrikkeldataProviderTests
     [Fact]
     public void GetMatrikkelOpplysningerTest()
     {
-        var matrikkelregistreringType = new MatrikkeldataProvider(_config).GetMatrikkelOpplysninger(3817, 56, 16);
+        var matrikkelregistreringType = new MatrikkeldataProvider(_config).GetMatrikkelOpplysninger(3817, 56, 16, 0, 0);
 
         var matrikkelnummerType = matrikkelregistreringType.eiendomsidentifikasjon.First();
 
@@ -27,4 +27,5 @@ public class MatrikkeldataProviderTests
         matrikkelnummerType.gaardsnummer.Should().Be("56");
         matrikkelnummerType.bruksnummer.Should().Be("16");
     }
+ 
 }

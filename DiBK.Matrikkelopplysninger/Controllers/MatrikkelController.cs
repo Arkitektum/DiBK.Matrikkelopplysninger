@@ -16,9 +16,9 @@ namespace DiBK.Matrikkelopplysninger.Controllers
         }
 
         [HttpGet("{knr:int},{gnr:int},{bnr:int}")]
-        public MatrikkelregistreringType Get(int knr, int gnr, int bnr)
+        public MatrikkelregistreringType Get(int knr, int gnr, int bnr, int fnr, int snr)
         {
-            return new MatrikkeldataProvider(_config).GetMatrikkelOpplysninger(knr, gnr, bnr);
+            return new MatrikkeldataProvider(_config).GetMatrikkelOpplysninger(knr, gnr, bnr, fnr, snr);
         }
     }
 }
