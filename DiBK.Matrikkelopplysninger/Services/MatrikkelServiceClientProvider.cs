@@ -4,8 +4,6 @@ using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.adresse;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.bygning;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.matrikkelenhet;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.store;
-using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.kodeliste;
-using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.kommune;
 
 
 namespace DiBK.Matrikkelopplysninger.Services
@@ -61,29 +59,7 @@ namespace DiBK.Matrikkelopplysninger.Services
             return matrikkelenhetServiceClient;
 
         }
-
-        public KodelisteServiceClient GetKodelisteServiceClient()
-        {
-            var kodelisteServiceClient = new KodelisteServiceClient(GetBasicHttpBinding(), new EndpointAddress
-                (_webServiceConfig.GetValue<string>("EndpointAddress") + "KodelisteServiceWS"));
-
-            SetCredentialsFromConfig(kodelisteServiceClient.ClientCredentials);
-
-            return kodelisteServiceClient;
-
-        }
-
-        public KommuneServiceClient GetKommuneServiceClient()
-        {
-            var kommuneServiceClient = new KommuneServiceClient(GetBasicHttpBinding(), new EndpointAddress
-                (_webServiceConfig.GetValue<string>("EndpointAddress") + "KommuneServiceWS"));
-
-            SetCredentialsFromConfig(kommuneServiceClient.ClientCredentials);
-
-            return kommuneServiceClient;
-
-        }
-
+             
         public MatrikkelContext GetMatrikkelContextObject()
         {
             return new MatrikkelContext
