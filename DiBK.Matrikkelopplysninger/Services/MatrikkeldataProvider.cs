@@ -34,8 +34,8 @@ public class MatrikkeldataProvider
 
     public MatrikkelregistreringType GetMatrikkelOpplysninger(int knr, int gnr, int bnr, int fnr, int snr)
     {
-        var matrikkelenhet = (Matrikkelenhet)_storeServiceClient.getObject(GetMatrikkelenhetId(knr, gnr, bnr, fnr, snr), _matrikkelContextObject);
-        var kommune = (Kommune)_storeServiceClient.getObject(matrikkelenhet.matrikkelnummer.kommuneId, _matrikkelContextObject);
+        var matrikkelenhet = _storeServiceClient.getObject(GetMatrikkelenhetId(knr, gnr, bnr, fnr, snr), _matrikkelContextObject) as Matrikkelenhet;
+        var kommune = _storeServiceClient.getObject(matrikkelenhet.matrikkelnummer.kommuneId, _matrikkelContextObject) as Kommune;
 
         return new MatrikkelregistreringType
         {
@@ -94,13 +94,16 @@ public class MatrikkeldataProvider
             //variabler til kodeliste
             var naeringsgruppeKode = (NaringsgruppeKode)_storeServiceClient.getObject(bygg.naringsgruppeKodeId, _matrikkelContextObject);
             var bygningstypeKode = (BygningstypeKode)_storeServiceClient.getObject(((Bygning)bygg).bygningstypeKodeId, _matrikkelContextObject);
-            //var bygningstatusKode = (BygningsstatusKode)_storeServiceClient.getObject(bygg.bygningsstatusKodeId, _matrikkelContextObject);
+                naeringsgruppeKode = _storeServiceClient.getObject(bygg.naringsgruppeKodeId, _matrikkelContextObject) as NaringsgruppeKode;
             var avlopsKode = (AvlopsKode)_storeServiceClient.getObject(bygg.avlopsKodeId, _matrikkelContextObject);
             var vannforsyningKode = (VannforsyningsKode)_storeServiceClient.getObject(bygg.vannforsyningsKodeId, _matrikkelContextObject);
             
             bygning.bygningsnummer = bygg.bygningsnummer.ToString();
             bygning.naeringsgruppe = GetKodeType(naeringsgruppeKode?.kodeverdi, naeringsgruppeKode?.navn[0]?.value?.ToString());
+                avlopsKode = _storeServiceClient.getObject(bygg.avlopsKodeId, _matrikkelContextObject) as AvlopsKode;
+                bygningstypeKode = _storeServiceClient.getObject(((Bygning)bygg).bygningstypeKodeId, _matrikkelContextObject) as BygningstypeKode;
             bygning.bygningstype = GetKodeType(bygningstypeKode?.kodeverdi, bygningstypeKode?.navn[0]?.value?.ToString());
+                vannforsyningsKode = _storeServiceClient.getObject(bygg.vannforsyningsKodeId, _matrikkelContextObject) as VannforsyningsKode;
             bygning.bebygdAreal = bygg.bebygdAreal;
             bygning.bebygdArealSpecified = bygg.bebygdArealSpecified;                                  
             bygning.etasjer = GetEtasjer(bygg);
@@ -201,6 +204,7 @@ public class MatrikkeldataProvider
         {
             var oppvarmingsKodeId = (OppvarmingsKode)_storeServiceClient.getObject(varmeObjekt, _matrikkelContextObject);
             varmefordelinger.Add(GetKodeType(oppvarmingsKodeId?.kodeverdi, oppvarmingsKodeId?.navn[0]?.value?.ToString()));           
+                var oppvarmingsKodeId = _storeServiceClient.getObject(varmeObjekt, _matrikkelContextObject) as OppvarmingsKode;
         }
         return varmefordelinger.ToArray();
     }
@@ -213,6 +217,7 @@ public class MatrikkeldataProvider
         {
             var energikildeKodeId = (EnergikildeKode)_storeServiceClient.getObject(energiObjekt, _matrikkelContextObject);
             energiforsyninger.Add(GetKodeType(energikildeKodeId?.kodeverdi, energikildeKodeId?.navn[0]?.value?.ToString()));
+                var energikildeKodeId = _storeServiceClient.getObject(energiObjekt, _matrikkelContextObject) as EnergikildeKode;
         }
         return energiforsyninger.ToArray();
     }
@@ -223,7 +228,7 @@ public class MatrikkeldataProvider
         var etasjer = new List<EtasjeType>();
         foreach (var etasje in bygg.etasjer)
         {
-            var etasjeplanKode = (EtasjeplanKode)_storeServiceClient.getObject(etasje.etasjeplanKodeId, _matrikkelContextObject);
+            var etasjeplanKode = _storeServiceClient.getObject(etasje.etasjeplanKodeId, _matrikkelContextObject) as EtasjeplanKode;
             var etasjeType = new EtasjeType()
             {
                 antallBoenheter = etasje.antallBoenheter.ToString(),
@@ -262,6 +267,9 @@ public class MatrikkeldataProvider
             var etasjeplanKode = (EtasjeplanKode)_storeServiceClient.getObject(bruksenhet.etasjeplanKodeId, _matrikkelContextObject);
             var kjokkenkode = (KjokkentilgangKode)_storeServiceClient.getObject(bruksenhet.kjokkentilgangId, _matrikkelContextObject);
             var bruksenhetTypeKode = (BruksenhetstypeKode)_storeServiceClient.getObject(bruksenhet.bruksenhetstypeKodeId, _matrikkelContextObject);
+                etasjeplanKode = _storeServiceClient.getObject(bruksenhet.etasjeplanKodeId, _matrikkelContextObject) as EtasjeplanKode;
+                kjokkenkode = _storeServiceClient.getObject(bruksenhet.kjokkentilgangId, _matrikkelContextObject) as KjokkentilgangKode;
+                bruksenhetTypeKode = _storeServiceClient.getObject(bruksenhet.bruksenhetstypeKodeId, _matrikkelContextObject) as BruksenhetstypeKode;
 
             var vegadresse = GetVegadresse(bruksenhet.adresseId);         
             var adresse = new BoligadresseType();
