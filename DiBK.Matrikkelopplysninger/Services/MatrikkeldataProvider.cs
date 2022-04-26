@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -142,24 +142,42 @@ public class MatrikkeldataProvider
         return matrikkelenhetIds.First();
     }
 
-
-    private Vegadresse GetVegadresse(AdresseId adresseId)
+    private Dictionary<long, Vegadresse?> _vegadresseCache = new();
+    private Vegadresse? GetVegadresse(AdresseId adresseId)
     {
+        if(_vegadresseCache.TryGetValue(adresseId.value, out var vegadresse))
+            return vegadresse;
+
         try
         {
-            return (Vegadresse)_storeServiceClient.getObject(adresseId, _matrikkelContextObject);
-        } catch (Exception e)
+            var vegadresseFromStoreService = _storeServiceClient.getObject(adresseId, _matrikkelContextObject) as Vegadresse;
+            _vegadresseCache.Add(adresseId.value, vegadresseFromStoreService);
+            return vegadresseFromStoreService;
+        }
+        catch (Exception e)
         {
             var message = e.Message.ToString();
             return null;
         }
-            
+
     }
 
-
-    private Veg GetVeg(VegId vegId)
+    private Dictionary<long, Veg?> _vegCache = new();
+    private Veg? GetVeg(VegId vegId)
     {
-        return (Veg)_storeServiceClient.getObject(vegId, _matrikkelContextObject);       
+        if (_vegCache.TryGetValue(vegId.value, out var veg))
+            return veg;
+        try
+        {
+            var veg2 = _storeServiceClient.getObject(vegId, _matrikkelContextObject) as Veg;
+            _vegCache.Add(vegId.value, veg2);
+            return veg2;
+        }
+        catch (Exception e)
+        {
+            var message = e.Message.ToString();
+            return null;
+        }
     }
 
 
