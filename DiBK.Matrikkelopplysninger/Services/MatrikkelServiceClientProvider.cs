@@ -39,6 +39,17 @@ namespace DiBK.Matrikkelopplysninger.Services
 
         }
 
+        public BruksenhetServiceClient GetBruksenhetServiceClient()
+        {
+            var bruksenhetServiceClient = new BruksenhetServiceClient(GetBasicHttpBinding(), new EndpointAddress
+                (_webServiceConfig.GetValue<string>("EndpointAddress") + "BruksenhetServiceWS"));
+
+            SetCredentialsFromConfig(bruksenhetServiceClient.ClientCredentials);
+
+            return bruksenhetServiceClient;
+
+        }
+
         public AdresseServiceClient GetAdresseServiceClient()
         {
             var adresseServiceClient = new AdresseServiceClient(GetBasicHttpBinding(), new EndpointAddress

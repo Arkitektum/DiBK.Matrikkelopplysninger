@@ -13,9 +13,10 @@ public class MatrikkeldataProvider
     private readonly MatrikkelContext _matrikkelContextObject;
     private readonly StoreServiceClient _storeServiceClient;
     private readonly BygningServiceClient _bygningServiceClient;
+    private readonly BruksenhetServiceClient _bruksenhetServiceClient;
     private readonly AdresseServiceClient _adresseServiceClient;
     private readonly MatrikkelenhetServiceClient _matrikkelenhetServiceClient;
-    private readonly KodelisteServiceClient _kodelisteServiceClient;
+    
 
 
     public MatrikkeldataProvider(IConfiguration config)
@@ -26,8 +27,9 @@ public class MatrikkeldataProvider
         _matrikkelenhetServiceClient = matrikkelClientProvider.GetMatrikkelenhetServiceClient();
         _adresseServiceClient = matrikkelClientProvider.GetAdresseServiceClient();
         _bygningServiceClient = matrikkelClientProvider.GetBygningServiceClient();
+        _bruksenhetServiceClient = matrikkelClientProvider.GetBruksenhetServiceClient();
         _storeServiceClient = matrikkelClientProvider.GetStoreServiceClient();
-        _kodelisteServiceClient = matrikkelClientProvider.GetKodelisteServiceClient();
+        
     }
 
 
@@ -36,6 +38,14 @@ public class MatrikkeldataProvider
         var matrikkelenhetId = GetMatrikkelenhetId(knr, gnr, bnr, fnr, snr);
         var matrikkelenhet = _storeServiceClient.getObject(matrikkelenhetId, _matrikkelContextObject) as Matrikkelenhet;      
         var kommune = _storeServiceClient.getObject(matrikkelenhet.matrikkelnummer.kommuneId, _matrikkelContextObject) as Kommune;
+        var bruksenhetId = _bruksenhetServiceClient.findBruksenheterForMatrikkelenhet(matrikkelenhetId, _matrikkelContextObject);
+        var bruksenheter = _storeServiceClient.getObjects(bruksenhetId, _matrikkelContextObject);
+        foreach (Bruksenhet bruksenhet in bruksenheter)
+        {
+            var noko = bruksenhet.bruksareal;
+
+        }
+ 
         
         
         /******KLADD**********/
