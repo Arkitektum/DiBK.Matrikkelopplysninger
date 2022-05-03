@@ -4,7 +4,6 @@ using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.adresse;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.bygning;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.matrikkelenhet;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.store;
-using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.kodeliste;
 
 
 namespace DiBK.Matrikkelopplysninger.Services
@@ -26,17 +25,6 @@ namespace DiBK.Matrikkelopplysninger.Services
             SetCredentialsFromConfig(storeServiceClient.ClientCredentials);
 
             return storeServiceClient;
-        }
-
-        public BygningServiceClient GetBygningServiceClient()
-        {
-            var bygningServiceClient = new BygningServiceClient(GetBasicHttpBinding(), new EndpointAddress
-                (_webServiceConfig.GetValue<string>("EndpointAddress") + "BygningServiceWS"));
-
-            SetCredentialsFromConfig(bygningServiceClient.ClientCredentials);
-
-            return bygningServiceClient;
-
         }
 
         public BruksenhetServiceClient GetBruksenhetServiceClient()
@@ -69,17 +57,6 @@ namespace DiBK.Matrikkelopplysninger.Services
             SetCredentialsFromConfig(matrikkelenhetServiceClient.ClientCredentials);
 
             return matrikkelenhetServiceClient;
-
-        }
-
-        public KodelisteServiceClient GetKodelisteServiceClient()
-        {
-            var kodelisteServiceClient = new KodelisteServiceClient(GetBasicHttpBinding(), new EndpointAddress
-                (_webServiceConfig.GetValue<string>("EndpointAddress") + "KodelisteServiceWS"));
-
-            SetCredentialsFromConfig(kodelisteServiceClient.ClientCredentials);
-
-            return kodelisteServiceClient;
 
         }
 

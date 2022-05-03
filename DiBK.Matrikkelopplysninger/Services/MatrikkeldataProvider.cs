@@ -3,7 +3,6 @@ using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.adresse;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.bygning;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.matrikkelenhet;
 using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.store;
-using no.statkart.matrikkel.matrikkelapi.wsapi.v1.service.kodeliste;
 using System.Linq;
 
 namespace DiBK.Matrikkelopplysninger.Services;
@@ -37,28 +36,7 @@ public class MatrikkeldataProvider
     {
         var matrikkelenhetId = GetMatrikkelenhetId(knr, gnr, bnr, fnr, snr);
         var matrikkelenhet = _storeServiceClient.getObject(matrikkelenhetId, _matrikkelContextObject) as Matrikkelenhet;      
-        var kommune = _storeServiceClient.getObject(matrikkelenhet.matrikkelnummer.kommuneId, _matrikkelContextObject) as Kommune;
-        var bruksenhetId = _bruksenhetServiceClient.findBruksenheterForMatrikkelenhet(matrikkelenhetId, _matrikkelContextObject);
-        var bruksenheter = _storeServiceClient.getObjects(bruksenhetId, _matrikkelContextObject);
-        foreach (Bruksenhet bruksenhet in bruksenheter)
-        {
-            var noko = bruksenhet.bruksareal;
-
-        }
- 
-        
-        
-        /******KLADD**********/
-        ////samling av bobleobjekter
-        //var matrikkelTransfer = _matrikkelenhetServiceClient.findObjekterForMatrikkelenhet(matrikkelenhetId, _matrikkelContextObject);
-        //var bobleobjekter = matrikkelTransfer.bubbleObjects;
-        ////matrikkelenhet med alle teiggrenser og kvalitet
-        //var matrikkelmedteig = _matrikkelenhetServiceClient.findMatrikkelenhetMedTeiger(new MatrikkelenhetIdent { kommuneIdent = new() { kommunenummer = knr.ToString() }, gardsnummer = gnr, gardsnummerSpecified = true, bruksnummer = bnr, bruksnummerSpecified = true, festenummer = fnr, festenummerSpecified = true, seksjonsnummer = snr, seksjonsnummerSpecified = true }, _matrikkelContextObject);
-        //var bobleteig = matrikkelmedteig.bubbleObjects;
-        //var teigid = bobleteig.First().id;
-        //var teig = (Teiggrense)_storeServiceClient.getObject(teigid, _matrikkelContextObject);
-        //var kvalitet = teig.kvalitet;
-        ///********************/
+        var kommune = _storeServiceClient.getObject(matrikkelenhet.matrikkelnummer.kommuneId, _matrikkelContextObject) as Kommune;         
 
         return new MatrikkelregistreringType
         {
@@ -74,7 +52,7 @@ public class MatrikkeldataProvider
                 }
             },
             adresse = GetAdresser(matrikkelenhet),
-            bygning = GetBygninger(matrikkelenhetId),
+            bygning = GetBygninger(matrikkelenhet),
             prosjektnavn = "",
             kommunenavn = kommune?.kommunenavn,
         };
@@ -105,66 +83,54 @@ public class MatrikkeldataProvider
             adresseList.Add(adresser);
             }
         }
-
         return adresseList.ToArray();
     }
 
 
-    public BygningType[] GetBygninger(MatrikkelenhetId matrikkelenhetId)
+    public BygningType[] GetBygninger(Matrikkelenhet matrikkelenhet)
     {
+        var bruksenheterPrByggId = GetBruksenheterPrBygg(matrikkelenhet);
+
         var bygninger = new List<BygningType>();
 
-        ByggId[] byggIds = _bygningServiceClient.findByggForMatrikkelenhet(matrikkelenhetId, _matrikkelContextObject);
-        MatrikkelBubbleObject[] matrikkelBubbleObjectsBygg = _storeServiceClient.getObjects(byggIds, _matrikkelContextObject);
+        foreach (var byggId in bruksenheterPrByggId)
+        {
+            var bygg = _storeServiceClient.getObject(byggId.Key, _matrikkelContextObject) as Bygg;
 
-        foreach (Bygg bygg in matrikkelBubbleObjectsBygg.Where(p => p is Bygning))
-        {            
-            var bygning = new BygningType();
-            AvlopsKode avlopsKode = null;
-            BygningstypeKode bygningstypeKode = null;
-            VannforsyningsKode vannforsyningsKode = null;  
+                var bygning = new BygningType();
 
-            //variabler til kodeliste
-            if(bygg.naringsgruppeKodeId != null && _storeServiceClient.getObject(bygg.naringsgruppeKodeId, _matrikkelContextObject) is NaringsgruppeKode naeringsgruppeKode)
-                bygning.naeringsgruppe = GetKodeType(naeringsgruppeKode);
-           
-            if (bygg.avlopsKodeId != null)
-            {
-                avlopsKode = _storeServiceClient.getObject(bygg.avlopsKodeId, _matrikkelContextObject) as AvlopsKode;
-                bygning.avlop = GetKodeType(avlopsKode);
-            }
-            if (((Bygning)bygg).bygningstypeKodeId != null)
-            {
-                bygningstypeKode = _storeServiceClient.getObject(((Bygning)bygg).bygningstypeKodeId, _matrikkelContextObject) as BygningstypeKode;
-                bygning.bygningstype = GetKodeType(bygningstypeKode);
-            }
-            if (bygg.vannforsyningsKodeId != null)
-            {
-                vannforsyningsKode = _storeServiceClient.getObject(bygg.vannforsyningsKodeId, _matrikkelContextObject) as VannforsyningsKode;
-                bygning.vannforsyning = GetKodeType(vannforsyningsKode);
-            }
-         
-            var snr = GetSeksjonsnummer(bygg);
+                //variabler til kodeliste
+                if (bygg.naringsgruppeKodeId != null && _storeServiceClient.getObject(bygg.naringsgruppeKodeId, _matrikkelContextObject) is NaringsgruppeKode naeringsgruppeKode)
+                    bygning.naeringsgruppe = GetKodeType(naeringsgruppeKode);
 
-            bygning.bygningsnummer = bygg.bygningsnummer.ToString();            
-            bygning.bebygdAreal = bygg.bebygdAreal;
-            bygning.bebygdArealSpecified = bygg.bebygdArealSpecified;
-            bygning.etasjer = GetEtasjer(bygg);            
-            bygning.bruksenheter = GetBruksenheter(bygg, snr); //TODO: Må jeg kanskje sende med seksjonsnummer her?
-            bygning.energiforsyning = new EnergiforsyningType
-            {
-                varmefordeling = GetVarmefordelinger(bygg),
-                energiforsyning = GetEnergiforsyninger(bygg)
-                //relevant = //TODO: ser ut som denne allerede ligger i kodelisten
-                //relevantSpecified = 
-            };
-            
-            bygning.harHeis = bygg.harHeis;
-            bygning.harHeisSpecified = bygg.harHeisSpecified;
+                if (bygg.avlopsKodeId != null && _storeServiceClient.getObject(bygg.avlopsKodeId, _matrikkelContextObject) is AvlopsKode avlopsKode)
+                    bygning.avlop = GetKodeType(avlopsKode);
 
-            bygninger.Add(bygning);
+                if (((Bygning)bygg).bygningstypeKodeId != null && _storeServiceClient.getObject(((Bygning)bygg).bygningstypeKodeId, _matrikkelContextObject) is BygningstypeKode bygningstypeKode)
+                    bygning.bygningstype = GetKodeType(bygningstypeKode);
+
+                if (bygg.vannforsyningsKodeId != null && _storeServiceClient.getObject(bygg.vannforsyningsKodeId, _matrikkelContextObject) is VannforsyningsKode vannforsyningsKode)
+                    bygning.vannforsyning = GetKodeType(vannforsyningsKode);
+
+                bygning.bygningsnummer = bygg.bygningsnummer.ToString();
+                bygning.bebygdAreal = bygg.bebygdAreal;
+                bygning.bebygdArealSpecified = bygg.bebygdArealSpecified;
+                bygning.etasjer = GetEtasjer(bygg);
+                
+                bygning.bruksenheter = byggId.Value.ToArray();
+                bygning.energiforsyning = new EnergiforsyningType
+                {
+                    varmefordeling = GetVarmefordelinger(bygg),
+                    energiforsyning = GetEnergiforsyninger(bygg)
+                    //relevant = //TODO: ser ut som denne allerede ligger i kodelisten
+                    //relevantSpecified = 
+                };
+
+                bygning.harHeis = bygg.harHeis;
+                bygning.harHeisSpecified = bygg.harHeisSpecified;
+
+                bygninger.Add(bygning);
         }
-
         return bygninger.ToArray();
     }
 
@@ -172,13 +138,15 @@ public class MatrikkeldataProvider
     //***---Hjelpemetoder---***
     private MatrikkelenhetId GetMatrikkelenhetId(int knr, int gnr, int bnr, int fnr, int snr)
     {
-            var matrikkelenhetsokModel = new MatrikkelenhetsokModel()
-            {
-                kommunenummer = knr.ToString(),
-                gardsnummer = gnr.ToString(),
-                bruksnummer = bnr.ToString(),
-                festenummer = fnr,
-                seksjonsnummer = snr
+        var matrikkelenhetsokModel = new MatrikkelenhetsokModel()
+        {
+            kommunenummer = knr.ToString(),
+            gardsnummer = gnr.ToString(),
+            bruksnummer = bnr.ToString(),
+            festenummer = fnr,
+            festenummerSpecified = true,
+            seksjonsnummer = snr,
+            seksjonsnummerSpecified = true
             };
             
             MatrikkelenhetId[] matrikkelenhetIds = _matrikkelenhetServiceClient.findMatrikkelenheter(matrikkelenhetsokModel, _matrikkelContextObject);
@@ -301,82 +269,59 @@ public class MatrikkeldataProvider
     }
 
 
-    private BruksenhetType[] GetBruksenheter(Bygg bygg, int snr)
+    private Dictionary<ByggId, List<BruksenhetType>> GetBruksenheterPrBygg(Matrikkelenhet matrikkelenhet)
     {
-        var bruksenheter = new List<BruksenhetType>();
-        var matrikkelBubbleObjectsBruksenhet = _storeServiceClient.getObjects(bygg.bruksenhetIds, _matrikkelContextObject);
+        var bruksenheterPrBygg = new Dictionary<ByggId, List<BruksenhetType>>();
+        var bruksenhetIds = _bruksenhetServiceClient.findBruksenheterForMatrikkelenhet((MatrikkelenhetId)matrikkelenhet.id, _matrikkelContextObject);
+        var matrikkelBubbleObjectsBruksenhet = _storeServiceClient.getObjects(bruksenhetIds, _matrikkelContextObject);
+
         foreach (Bruksenhet bruksenhet in matrikkelBubbleObjectsBruksenhet)
-        {            
-            EtasjeplanKode etasjeplanKode = null;
-            KodeType etasjeplan = null;
-            KjokkentilgangKode kjokkenkode = null;
-            KodeType kjokkenTilgang = null;
-            BruksenhetstypeKode bruksenhetTypeKode = null;
-            KodeType bruksenhetsType = null;
-
-            if (bruksenhet.etasjeplanKodeId != null)
-            {
-                etasjeplanKode = _storeServiceClient.getObject(bruksenhet.etasjeplanKodeId, _matrikkelContextObject) as EtasjeplanKode;
-                etasjeplan = GetKodeType(etasjeplanKode);
-            }            
-            if (bruksenhet.kjokkentilgangId != null)
-            {
-                kjokkenkode = _storeServiceClient.getObject(bruksenhet.kjokkentilgangId, _matrikkelContextObject) as KjokkentilgangKode;
-                kjokkenTilgang = GetKodeType(kjokkenkode);
-            }
-            if (bruksenhet.bruksenhetstypeKodeId != null)
-            {
-                bruksenhetTypeKode = _storeServiceClient.getObject(bruksenhet.bruksenhetstypeKodeId, _matrikkelContextObject) as BruksenhetstypeKode;
-                bruksenhetsType = GetKodeType(bruksenhetTypeKode);
-            }                 
-
-            BoligadresseType adresse = null;
+        {
+            var adresse = new BoligadresseType();
 
             if (bruksenhet.adresseId != null)
             {
                 var vegadresse = GetVegadresse(bruksenhet.adresseId);
-                adresse = new BoligadresseType();
+                
                 if (vegadresse != null)
                 {
                     var veg = GetVeg(vegadresse.vegId);
-                    adresse.adressekode = veg?.adressekode!.ToString();             //TODO: kan dette være det samme som i AdresseType[]?
+                    adresse.adressekode = veg?.adressekode!.ToString();    //TODO: skal vi skille på adresse på matrikkelnivå og adresse på bruksenhetnivå?
                     adresse.adressenavn = veg?.adressenavn;
                     adresse.adressenummer = vegadresse.nummer.ToString();
-                    adresse.adressebokstav = vegadresse.bokstav;
-                    var matrikkelenhet = _storeServiceClient.getObject(bruksenhet.matrikkelenhetId, _matrikkelContextObject) as Matrikkelenhet;
-                    adresse.seksjonsnummer = matrikkelenhet.matrikkelnummer.seksjonsnummer.ToString(); //TODO: hent fra bruksobjekt                
+                    adresse.adressebokstav = vegadresse.bokstav;                  
+                    adresse.seksjonsnummer = matrikkelenhet.matrikkelnummer.seksjonsnummer.ToString();               
                 }
             }
-            var bruksenhetType = new BruksenhetType()
-            {
-                bruksenhetsnummer = new BruksenhetsnummerType
-                {
-                    etasjeplan = etasjeplan,
-                    etasjenummer = bruksenhet.etasjenummer.ToString(),
-                    loepenummer = bruksenhet.lopenummer.ToString()
-                },
-                bruksareal = bruksenhet.bruksareal,
-                bruksarealSpecified = bruksenhet.bruksarealSpecified,
-                kjoekkentilgang = kjokkenTilgang,
-                antallRom = bruksenhet.antallRom.ToString(),
-                antallBad = bruksenhet.antallBad.ToString(),
-                antallWC = bruksenhet.antallWC.ToString(),
-                //boligOpplysning = ,   //TODO:             
-                bruksenhetstype = bruksenhetsType,
-                adresse = adresse
-            };
 
-            bruksenheter.Add(bruksenhetType);
+            var bruksenhetType = new BruksenhetType();
+            var bruksenhetsnummer = new BruksenhetsnummerType();
+            bruksenhetsnummer.etasjenummer = bruksenhet.etasjenummer.ToString();
+            bruksenhetsnummer.loepenummer = bruksenhet.lopenummer.ToString();
+
+            if (bruksenhet.etasjeplanKodeId != null && _storeServiceClient.getObject(bruksenhet.etasjeplanKodeId, _matrikkelContextObject) is EtasjeplanKode etasjeplanKode)
+                bruksenhetsnummer.etasjeplan = GetKodeType(etasjeplanKode);
+
+            if (bruksenhet.kjokkentilgangId != null && _storeServiceClient.getObject(bruksenhet.kjokkentilgangId, _matrikkelContextObject) is KjokkentilgangKode kjokkenkode)
+                bruksenhetType.kjoekkentilgang = GetKodeType(kjokkenkode);
+
+            if (bruksenhet.bruksenhetstypeKodeId != null && _storeServiceClient.getObject(bruksenhet.bruksenhetstypeKodeId, _matrikkelContextObject) is BruksenhetstypeKode bruksenhetTypeKode)
+                bruksenhetType.bruksenhetstype = GetKodeType(bruksenhetTypeKode);
+
+            bruksenhetType.bruksareal = bruksenhet.bruksareal;
+            bruksenhetType.bruksarealSpecified = bruksenhet.bruksarealSpecified;
+            bruksenhetType.antallRom = bruksenhet.antallRom.ToString();
+            bruksenhetType.antallBad = bruksenhet.antallBad.ToString();
+            bruksenhetType.antallWC = bruksenhet.antallWC.ToString();
+            //boligOpplysning = ,   //TODO: hvor finner vi denne?
+            bruksenhetType.adresse = adresse;
+
+            if (bruksenheterPrBygg.ContainsKey(bruksenhet.byggId))
+                bruksenheterPrBygg[bruksenhet.byggId].Add(bruksenhetType);
+            else
+                bruksenheterPrBygg.Add(bruksenhet.byggId, new List<BruksenhetType>{ bruksenhetType });
         }
-        return bruksenheter.ToArray();
-    }
 
-    private int GetSeksjonsnummer(Bygg bygg)
-    {
-        MatrikkelenhetId[] matrikkelenhetIds = _matrikkelenhetServiceClient.findMatrikkelenheterForBygg((ByggId)bygg.id, _matrikkelContextObject);
-        var matrikkelenhet = _storeServiceClient.getObject(matrikkelenhetIds.First(), _matrikkelContextObject) as Matrikkelenhet;
-
-        var snr = matrikkelenhet.matrikkelnummer.seksjonsnummer;
-        return snr;
+        return bruksenheterPrBygg;
     }
 }
